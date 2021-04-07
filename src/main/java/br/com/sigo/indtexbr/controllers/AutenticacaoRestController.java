@@ -63,18 +63,10 @@ public class AutenticacaoRestController {
 		return ResponseEntity.badRequest().build();
 	}
 
-	/**
-	 * Método responsável por gerar um token dado um usuario.
-	 * 
-	 * @param credentials
-	 * @param tenantId
-	 * @return
-	 */
 	@ResponseBody
 	@ApiOperation(value = "Gerar o token para aplicação. Necessários usuario, senha.")
 	@PostMapping("/gettoken")
 	public ResponseEntity<String> gerarToken(@RequestBody CredenciaisDeUsuarioDto credentials) {
-
 		log.info("Inicio da geracao do token.");
 
 		final Authentication authentication = authenticationManager
