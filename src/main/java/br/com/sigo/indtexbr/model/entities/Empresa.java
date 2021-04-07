@@ -36,5 +36,8 @@ public class Empresa implements Serializable {
 
 	@Column(name = "insc_estadual", nullable = true, unique = true)
 	private String inscricaoEstadual;
+	
+	@Column(name = "tx_observacao")
+	private String observacao;
 
 }
