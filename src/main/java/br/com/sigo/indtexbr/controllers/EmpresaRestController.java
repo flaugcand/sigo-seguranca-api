@@ -4,12 +4,14 @@ import static br.com.sigo.indtexbr.utils.Constante.APPLICATION_JSON;
 import static br.com.sigo.indtexbr.utils.Constante.HTTP_SUCESS;
 import static br.com.sigo.indtexbr.utils.Constante.SUCCESS;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,10 +39,27 @@ public class EmpresaRestController {
 	@Autowired
 	private EmpresaService service;
 
-	@ApiResponses({@ApiResponse(code = HTTP_SUCESS, message = "Success")})
+	@ApiResponses({ @ApiResponse(code = HTTP_SUCESS, message = "Success") })
+	@ApiOperation(value = "Método de criação de Empresa")
+	@GetMapping(produces = APPLICATION_JSON)
+	public @ResponseBody ResponseEntity<List<Empresa>> consultar(
+			@RequestHeader("Authorization") Map<String, String> authorization) {
+		try {
+			List<Empresa> findAll = service.findAll();
+
+			return ResponseEntity.ok(findAll);
+		} catch (Exception e) {
+			log.error("Erro ao salvar a empresa", e);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+
+	@ApiResponses({ @ApiResponse(code = HTTP_SUCESS, message = "Success") })
 	@ApiOperation(value = "Método de criação de Empresa")
 	@PostMapping(produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
-	public @ResponseBody ResponseEntity<Empresa> salvaEmpresa(@RequestHeader("Authorization") Map<String, String> authorization, @RequestBody Empresa empresa) {
+	public @ResponseBody ResponseEntity<Empresa> salvaEmpresa(
+			@RequestHeader("Authorization") Map<String, String> authorization, @RequestBody Empresa empresa) {
 		try {
 			empresa.setId(null);
 			Empresa entidade = service.salvar(empresa);
@@ -50,13 +69,14 @@ public class EmpresaRestController {
 			log.error("Erro ao salvar a empresa", e);
 			return ResponseEntity.badRequest().build();
 		}
-		
+
 	}
 
-	@ApiResponses({@ApiResponse(code = HTTP_SUCESS, message = SUCCESS, response = Empresa.class)})
+	@ApiResponses({ @ApiResponse(code = HTTP_SUCESS, message = SUCCESS, response = Empresa.class) })
 	@ApiOperation(value = "Método de atualização da Empresa")
 	@PutMapping(produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
-	public @ResponseBody ResponseEntity<Empresa> atualizaEmpresa(@RequestHeader("Authorization") Map<String, String> authorization, @RequestBody Empresa empresa)
+	public @ResponseBody ResponseEntity<Empresa> atualizaEmpresa(
+			@RequestHeader("Authorization") Map<String, String> authorization, @RequestBody Empresa empresa)
 			throws Exception {
 		try {
 			Empresa entidade = service.salvar(empresa);
@@ -68,10 +88,11 @@ public class EmpresaRestController {
 		}
 	}
 
-	@ApiResponses({@ApiResponse(code = HTTP_SUCESS, message = SUCCESS)})
+	@ApiResponses({ @ApiResponse(code = HTTP_SUCESS, message = SUCCESS) })
 	@ApiOperation(value = "Método de atualização da Empresa")
 	@DeleteMapping(produces = APPLICATION_JSON, value = "/{id}")
-	public @ResponseBody ResponseEntity<Empresa> excluiEmpresa(@RequestHeader("Authorization") Map<String, String> authorization, @PathVariable(value = "id") Long id)
+	public @ResponseBody ResponseEntity<Empresa> excluiEmpresa(
+			@RequestHeader("Authorization") Map<String, String> authorization, @PathVariable(value = "id") Long id)
 			throws Exception {
 		try {
 			service.delete(id);
