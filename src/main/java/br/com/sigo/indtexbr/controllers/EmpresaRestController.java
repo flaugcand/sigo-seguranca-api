@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api("REST API de cadastro de Empresas")
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping("${app.api.base}/empresa")
 public class EmpresaRestController {
 
@@ -43,7 +44,11 @@ public class EmpresaRestController {
 	@ApiOperation(value = "Método de criação de Empresa")
 	@GetMapping(produces = APPLICATION_JSON)
 	public @ResponseBody ResponseEntity<List<Empresa>> consultar(
-			@RequestHeader("Authorization") Map<String, String> authorization) {
+			@RequestHeader("Authorization") Map<String, String> authorization,
+			@RequestParam(name = "nomeFantasia", required = false) String nomeFantasia,
+			@RequestParam(name = "razaoSocial", required = false) String razaoSocial,
+			@RequestParam(name = "cnpj", required = false) String cnpj,
+			@RequestParam(name = "inscricaoEstadual", required = false) String inscricaoEstadual) {
 		try {
 			List<Empresa> findAll = service.findAll();
 
