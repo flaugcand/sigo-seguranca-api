@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.sigo.indtexbr.model.dto.MailDto;
 import br.com.sigo.indtexbr.model.entities.Empresa;
 import br.com.sigo.indtexbr.service.EmpresaService;
 import io.swagger.annotations.Api;
@@ -107,6 +108,23 @@ public class EmpresaRestController {
 			log.error("Erro ao atualizar a empresa", e);
 			return ResponseEntity.badRequest().build();
 		}
+	}
+
+	@ApiResponses({ @ApiResponse(code = HTTP_SUCESS, message = "Success") })
+	@ApiOperation(value = "Método de criação de Empresa")
+	@PostMapping(produces = APPLICATION_JSON, value = "/{id}/notificar")
+	public @ResponseBody ResponseEntity<String> notificarEmpresa(
+			@RequestHeader("Authorization") Map<String, String> authorization, @PathVariable(name = "id") Long id,
+			@RequestBody MailDto email) {
+		try {
+			service.notificarEmpresa(id, email);
+
+			return ResponseEntity.ok("Notificação Realizada com sucesso");
+		} catch (Exception e) {
+			log.error("Erro ao salvar a empresa", e);
+			return ResponseEntity.badRequest().body("Falha ao realizar o envio de e-mail");
+		}
+
 	}
 
 }

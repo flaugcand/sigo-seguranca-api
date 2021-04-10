@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import br.com.sigo.indtexbr.exceptions.GenericException;
+import br.com.sigo.indtexbr.model.dto.MailDto;
 import br.com.sigo.indtexbr.model.entities.Empresa;
 import br.com.sigo.indtexbr.repository.EmpresaRepository;;
 
@@ -24,6 +25,9 @@ public class EmpresaService {
 
 	@Autowired
 	private EmpresaRepository repository;
+	
+	@Autowired
+	private MailService mailService;
 
 	public Empresa salvar(final Empresa empresa) throws Exception {
 		try {
@@ -95,6 +99,20 @@ public class EmpresaService {
 			logger.error(e.getMessage());
 
 			throw e;
+		}
+	}
+	
+	public void notificarEmpresa(Long id, MailDto mail) throws Exception {
+		try {
+			Optional<Empresa> retorno = repository.findById(id);
+			if (retorno.isPresent()) {
+				mailService.sendEmail(mail);
+			}
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+
+			throw new GenericException("Não foi possível realizar o envio de e-mail");
 		}
 	}
 
