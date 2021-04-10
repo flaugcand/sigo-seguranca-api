@@ -25,7 +25,7 @@ public class AwsMailConfig {
 	public AmazonSimpleEmailService amazonSimpleEmailService() {
 		return AmazonSimpleEmailServiceClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(acessKey, secretKey)))
-				.withRegion(Regions.US_EAST_1).build();
+				.withRegion(Regions.US_EAST_2).build();
 	}
 
 	@Bean
