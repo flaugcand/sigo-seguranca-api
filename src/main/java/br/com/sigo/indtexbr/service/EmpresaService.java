@@ -25,9 +25,9 @@ public class EmpresaService {
 
 	@Autowired
 	private EmpresaRepository repository;
-	
+
 	@Autowired
-	private MailService mailService;
+	private AwsMailService mailService;
 
 	public Empresa salvar(final Empresa empresa) throws Exception {
 		try {
@@ -50,6 +50,7 @@ public class EmpresaService {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public List<Empresa> findByParameters(String nomeFantasia, String razaoSocial, String cnpj,
 			String inscricaoEstadual) throws Exception {
 		try {
@@ -101,14 +102,14 @@ public class EmpresaService {
 			throw e;
 		}
 	}
-	
+
 	public void notificarEmpresa(Long id, MailDto mail) throws Exception {
 		try {
 			Optional<Empresa> retorno = repository.findById(id);
 			if (retorno.isPresent()) {
-				mailService.sendEmail(mail);
+				mailService.sendMail(retorno.get().getEmail(), mail.getSubject(), mail.getCorpoEmail());
 			}
-			
+
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 

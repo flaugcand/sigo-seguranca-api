@@ -1,8 +1,5 @@
 package br.com.sigo.indtexbr.controllers;
 
-import static br.com.sigo.indtexbr.utils.Constante.HTTP_SUCESS;
-import static br.com.sigo.indtexbr.utils.Constante.SUCCESS;
-
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +9,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.sigo.indtexbr.exceptions.GenericException;
 import br.com.sigo.indtexbr.model.dto.CredenciaisDeUsuarioDto;
-import br.com.sigo.indtexbr.model.dto.UsuarioAutenticadoDTO;
-import br.com.sigo.indtexbr.service.SessaoUsuarioService;
 import br.com.sigo.indtexbr.service.TokenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,9 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("${app.api.base}/autenticacao")
 public class AutenticacaoRestController {
-
-	@Autowired
-	private SessaoUsuarioService service;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
