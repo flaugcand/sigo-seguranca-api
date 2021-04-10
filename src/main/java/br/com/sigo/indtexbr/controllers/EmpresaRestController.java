@@ -50,7 +50,7 @@ public class EmpresaRestController {
 			@RequestParam(name = "cnpj", required = false) String cnpj,
 			@RequestParam(name = "inscricaoEstadual", required = false) String inscricaoEstadual) {
 		try {
-			List<Empresa> findAll = service.findAll();
+			List<Empresa> findAll = service.findByParameters(nomeFantasia, razaoSocial, cnpj, inscricaoEstadual);
 
 			return ResponseEntity.ok(findAll);
 		} catch (Exception e) {
@@ -79,10 +79,10 @@ public class EmpresaRestController {
 
 	@ApiResponses({ @ApiResponse(code = HTTP_SUCESS, message = SUCCESS, response = Empresa.class) })
 	@ApiOperation(value = "Método de atualização da Empresa")
-	@PutMapping(produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
+	@PutMapping(produces = APPLICATION_JSON, consumes = APPLICATION_JSON, value = "/{id}")
 	public @ResponseBody ResponseEntity<Empresa> atualizaEmpresa(
-			@RequestHeader("Authorization") Map<String, String> authorization, @RequestBody Empresa empresa)
-			throws Exception {
+			@RequestHeader("Authorization") Map<String, String> authorization, @PathVariable(name = "id") Long id,
+			@RequestBody Empresa empresa) throws Exception {
 		try {
 			Empresa entidade = service.salvar(empresa);
 

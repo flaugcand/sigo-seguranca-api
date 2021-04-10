@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import br.com.sigo.indtexbr.exceptions.GenericException;
 import br.com.sigo.indtexbr.model.entities.Empresa;
@@ -45,10 +46,27 @@ public class EmpresaService {
 		}
 	}
 
-	public List<Empresa> findAll() throws Exception {
+	public List<Empresa> findByParameters(String nomeFantasia, String razaoSocial, String cnpj,
+			String inscricaoEstadual) throws Exception {
 		try {
+			String paramNomeFantasia = null;
+			String paramRazaoSocial = null;
+			String paramCnpj = null;
+			String paramInscricaoEstadual = null;
 
-			return repository.findAll();
+			if (!StringUtils.isEmpty(nomeFantasia))
+				paramNomeFantasia = nomeFantasia.toUpperCase() + "%";
+
+			if (!StringUtils.isEmpty(razaoSocial))
+				paramRazaoSocial = razaoSocial.toUpperCase() + "%";
+
+			if (!StringUtils.isEmpty(cnpj))
+				paramCnpj = cnpj + "%";
+
+			if (!StringUtils.isEmpty(cnpj))
+				paramInscricaoEstadual = inscricaoEstadual + "%";
+
+			return repository.findByParameters(paramNomeFantasia, paramRazaoSocial, paramCnpj, paramInscricaoEstadual);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 

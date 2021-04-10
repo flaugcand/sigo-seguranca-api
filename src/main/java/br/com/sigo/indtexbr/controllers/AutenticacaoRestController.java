@@ -47,22 +47,6 @@ public class AutenticacaoRestController {
 	@Autowired
 	private TokenService tokenService;
 
-	@ApiResponses({@ApiResponse(code = HTTP_SUCESS, message = SUCCESS, response = UsuarioAutenticadoDTO.class)})
-	@ApiOperation(value = "Método de autenticação de usuários.")
-	@GetMapping(produces = "application/json")
-	@RequestMapping({"/validateLogin"})
-	public ResponseEntity<UsuarioAutenticadoDTO> validateLogin(@RequestHeader("token") String token) {
-		try {
-			System.out.println(token);
-			service.autenticar(token);
-			return ResponseEntity.ok(new UsuarioAutenticadoDTO());
-		} catch (GenericException e) {
-			e.printStackTrace();
-		}
-		
-		return ResponseEntity.badRequest().build();
-	}
-
 	@ResponseBody
 	@ApiOperation(value = "Gerar o token para aplicação. Necessários usuario, senha.")
 	@PostMapping("/gettoken")

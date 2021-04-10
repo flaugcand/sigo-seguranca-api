@@ -39,5 +39,8 @@ public class Empresa implements Serializable {
 	
 	@Column(name = "tx_observacao")
 	private String observacao;
+	
+	@Column(name="ds_email")
+	private String email;
 
 }
