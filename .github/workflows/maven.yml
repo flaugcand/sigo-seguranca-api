@@ -13,6 +13,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+env:
+  env_var: ${{ vars.ENV_CONTEXT_VAR }}
 
 jobs:
   build:
@@ -50,4 +52,4 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ${{ GCR_REGISTRY }}/${{ GCR_PROJECT_ID }}/${{ IMAGE_NAME }}:latest
+          $GCR_REGISTRY/$GCR_PROJECT_ID/$IMAGE_NAME:latest
