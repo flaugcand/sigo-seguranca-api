@@ -15,7 +15,10 @@ on:
     branches: [ "main" ]
 env:
   env_var: ${{ vars.ENV_CONTEXT_VAR }}
-
+  GCR_REGISTRY: ${{ vars.GCR_REGISTRY }}
+  GCR_PROJECT_ID: ${{ vars.GCR_PROJECT_ID }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  
 jobs:
   build:
 
@@ -52,4 +55,4 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ${{ vars.GCR_REGISTRY }}/{{ vars.$GCR_PROJECT_ID }}/${{ vars.IMAGE_NAME }}:latest
+          ${{ env.GCR_REGISTRY }}/{{ env.$GCR_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
