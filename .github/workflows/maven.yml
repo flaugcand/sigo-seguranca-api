@@ -50,4 +50,4 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ${{ env.GCR_REGISTRY }}/${{ env.GCR_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          ${{ env.GCR_REGISTRY }}/${{ env.GCR_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
