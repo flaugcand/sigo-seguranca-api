@@ -52,4 +52,4 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ${{ vars.GCR_REGISTRY }}/{{ vars.$GCR_PROJECT_ID }}/${{ env.IMAGE }}:latest
+          ${{ vars.GCR_REGISTRY }}/${{ vars.GCR_PROJECT_ID }}/${{ vars.IMAGE }}:latest
