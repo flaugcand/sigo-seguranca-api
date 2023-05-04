@@ -44,8 +44,9 @@ jobs:
         gcloud auth configure-docker
 
     - name: Build and Push Docker image to GCR
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v4
       with:
         context: .
+        platforms: linux/amd64,linux/arm64
         push: true
         tags: ${{ env.GCR_REGISTRY }}/${{ env.GCR_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
