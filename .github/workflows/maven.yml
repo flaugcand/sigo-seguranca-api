@@ -43,7 +43,7 @@ jobs:
 
     - name: Configure Docker to use gcloud command-line tool as a credential helper
       run: |-
-        gcloud auth configure-docker
+        gcloud auth configure-docker ${{ vars.GCR_REGISTRY }}
 
     - name: Build and Push Docker image to GCR
       uses: docker/build-push-action@v4
